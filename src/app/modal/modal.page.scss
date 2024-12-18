@@ -18,7 +18,7 @@ ion-header {
 /* Ajuste de la imagen en el modal */
 img {
   width: 100%;
-  max-width: 200px; /* Tamaño máximo para imagen en pantallas pequeñas */
+  max-width: 200px; 
   height: auto;
   border-radius: 8px;
   margin: 1rem auto;
@@ -48,13 +48,13 @@ img {
 .botones-container {
   display: flex;
   flex-wrap: wrap; //los botones se ajusten automáticamente 
-  justify-content: center; //Centrar horizontalmente los botones 
+  justify-content: center; 
   gap: 1rem; //Espacio entre los botones 
 
   /* Diseño en columna para pantallas pequeñas */
   @media (max-width: 767px) {
     flex-direction: column; //Botones en columna 
-    align-items: center; //Centra los botones 
+    align-items: center; 
   }
 }
 
@@ -62,8 +62,8 @@ img {
 ion-button {
   --background: #007bff; 
   --color: #ffffff; 
-  max-width: 250px; //Máximo ancho por defecto 
-  width: auto; //Ajuste automático por defecto 
+  max-width: 250px; 
+  width: auto; 
   margin: 0 auto; //Centrar botones horizontalmente 
 
   /* Hover effect */
