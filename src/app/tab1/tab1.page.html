@@ -16,15 +16,20 @@
   <div *ngIf="!isLoading" class="filter-container">
     <ion-item>
       <ion-label>Título:</ion-label>
-      <ion-input [(ngModel)]="buscarTexto" placeholder="Buscar..."></ion-input>
+      <ion-input [(ngModel)]="buscarTexto" placeholder="Palabra..."></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Género:</ion-label>
       <ion-select [(ngModel)]="generoSeleccionado" interface="popover">
-        <ion-select-option value="">Todos</ion-select-option>
+        <ion-select-option value= "null">Todos</ion-select-option> 
         <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
       </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Reparto:</ion-label>
+      <ion-input [(ngModel)]="buscarReparto" placeholder="Actor/Actriz..."></ion-input>
     </ion-item>
 
     <ion-item>

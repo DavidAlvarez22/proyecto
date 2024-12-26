@@ -22,6 +22,7 @@ export class Tab1Page implements OnInit {
   buscarTexto: string = ''; // Texto de búsqueda para filtrar por título
   generoSeleccionado: string = ''; // Género seleccionado
   FechaLanzamiento: number | null = null; // Año de lanzamiento
+  buscarReparto: string = ''; 
 
   // Variables para la paginación
   paginaActual: number = 1; // Página actual
@@ -38,28 +39,49 @@ export class Tab1Page implements OnInit {
    */
   ngOnInit() {
     this.isLoading = true;// Activa la barra de carga
-    this.cargar.getPeliculas().pipe(delay(1000)).subscribe(data => {//delay para retrasar artificialmente
+    this.cargar.getPeliculas().pipe(delay(500)).subscribe(data => {//delay para retrasar artificialmente
       this.peliculas = data;
-      this.aplicarFiltros(); // Aplicar filtros iniciales
+      //this.aplicarFiltros(); // Aplicar filtros iniciales
+      this.peliculasFiltradas = this.peliculas;
       this.actualizarGeneros(); // Crear la lista de géneros
       this.isLoading = false; // Finalizar la carga
+      
+       // Actualizar la paginación
+       this.cargarPagina();
     }, error => {
       console.error("Error cargando películas", error);
       this.isLoading = false;
     });
+    
   }
 
   /**
    * Método que aplica los filtros de búsqueda, género y año de lanzamiento sobre las películas,
    * y actualiza la paginación.
    */
+  
+ /* 
   aplicarFiltros() {
+
+    //Comprueba si el array tiene carga ARKAITZ
+    if (!this.peliculas || this.peliculas.length === 0) {
+      console.error('No hay películas disponibles para filtrar.');
+      return; // Salir del método si no hay datos.
+    }
+    console.log("Texto: " + this.buscarTexto + " Genero: " + this.generoSeleccionado + " AÑO: " + this.FechaLanzamiento);
+
     let resultado = [...this.peliculas]; // Copiar la lista de películas
 
     // Filtro por título
-    if (this.buscarTexto.trim()) {
+    /*if (this.buscarTexto.trim()) {
       resultado = resultado.filter(peli =>
         peli.titulo.toLowerCase().includes(this.buscarTexto.toLowerCase())
+      );
+    }*/
+/*
+    if (this.buscarTexto.trim()) {
+      resultado = resultado.filter(peli =>
+        peli.titulo && peli.titulo.toLowerCase().includes(this.buscarTexto.toLowerCase())
       );
     }
 
@@ -73,7 +95,8 @@ export class Tab1Page implements OnInit {
     // Filtro por año de lanzamiento
     if (this.FechaLanzamiento) {
       resultado = resultado.filter(peli =>
-        peli.fechaLanzamiento == this.FechaLanzamiento
+        //peli.fechaLanzamiento == this.FechaLanzamiento
+        peli.fechaEstreno == this.FechaLanzamiento //Cambio
       );
     }
 
@@ -86,12 +109,41 @@ export class Tab1Page implements OnInit {
 
     // Actualizar la paginación
     this.cargarPagina();
-  }
+  }*/
+    
+ 
+    aplicarFiltros() {
+      this.isLoading = true;
+      if(this.buscarTexto !== "" || this.FechaLanzamiento !== null|| this.buscarReparto !== null || this.generoSeleccionado !== ""){
+        this.cargar.buscarPeliculas(this.generoSeleccionado, this.buscarReparto, this.FechaLanzamiento, this.buscarTexto).pipe(delay(0)).subscribe(
+          (response) => {
+            
+            this.peliculasFiltradas = response; // Asignamos los datos al array `generos` ordenados
+           
+            console.log("Busqueda correcta");
+            console.log(this.peliculasFiltradas);
+            console.log("Texto: " + this.buscarTexto + " Genero: " + this.generoSeleccionado + " AÑO: " + this.FechaLanzamiento);
+            
+            this.isLoading = false;
+            // Actualizar la paginación
+            this.cargarPagina();
+          },
+          (error) => {
+            console.error('Error en la busqueda:', error);
+          }
+        );
+      }
+    }
+     
 
   /**
    * Método que actualiza la lista de películas para mostrar en la página actual.
    */
   cargarPagina() {
+    // Calcular el número total de páginas
+    this.paginaActual = 1; // Reiniciar a la primera página
+    this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
+
     const inicio = (this.paginaActual - 1) * this.tamanoPagina; // Índice inicial
     const fin = inicio + this.tamanoPagina; // Índice final
 
@@ -120,17 +172,18 @@ export class Tab1Page implements OnInit {
   }
 
   /**
-   *Método que genera una lista única y ordenada de géneros a partir de las películas cargadas.
+   *Método que utiliza el servicio para recibir una lista de generos de la API.
    */
-  actualizarGeneros() {
-    const generosSet = new Set<string>(); // Set para eliminar duplicados
-    this.peliculas.forEach(peli => {
-      if (peli.generos) {
-        peli.generos.forEach((genero: string) => generosSet.add(genero));
+   actualizarGeneros() {
+    this.cargar.cargaGeneros().subscribe(
+      (response) => {
+        this.generos = response.sort(); // Asignamos los datos al array `generos` ordenados
+        console.log("Generos cargados correctamente")
+      },
+      (error) => {
+        console.error('Error al obtener los géneros:', error);
       }
-    });
-    // Convertir el Set a un array y ordenarlo
-    this.generos = Array.from(generosSet).sort();
+    );
   }
 
   /**
