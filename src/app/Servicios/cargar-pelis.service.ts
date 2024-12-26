@@ -13,7 +13,7 @@ export class CargarPelisService {
   private jsonUrl = '/assets/movies-2020s-con-enCartel-string.json'; //Url para cargar el json de las películas. Habrá que sustituirlo por url api.
   private jsonUrlCartelera = 'assets/pelis.json'; // Ruta al archivo JSON
 
-  private apiUrl: string = "http://localhost:8000/"; //Arkaitz
+  private apiUrl: string = "http://10.2.56.127:8000/"; //Arkaitz
   public movies: Cartelera[] = []; 
   private tituloPeliculaSeleccionada: string = '';
 

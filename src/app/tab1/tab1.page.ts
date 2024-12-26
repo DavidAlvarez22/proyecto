@@ -39,7 +39,7 @@ export class Tab1Page implements OnInit {
    */
   ngOnInit() {
     this.isLoading = true;// Activa la barra de carga
-    this.cargar.getPeliculas().pipe(delay(500)).subscribe(data => {//delay para retrasar artificialmente
+    this.cargar.getPeliculas().pipe(delay(0)).subscribe(data => {//delay para retrasar artificialmente
       this.peliculas = data;
       //this.aplicarFiltros(); // Aplicar filtros iniciales
       this.peliculasFiltradas = this.peliculas;
@@ -47,6 +47,9 @@ export class Tab1Page implements OnInit {
       this.isLoading = false; // Finalizar la carga
       
        // Actualizar la paginación
+       // Calcular el número total de páginas
+       this.paginaActual = 1; // Reiniciar a la primera página
+       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
        this.cargarPagina();
     }, error => {
       console.error("Error cargando películas", error);
@@ -126,6 +129,9 @@ export class Tab1Page implements OnInit {
             
             this.isLoading = false;
             // Actualizar la paginación
+            // Calcular el número total de páginas
+            this.paginaActual = 1; // Reiniciar a la primera página
+            this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
             this.cargarPagina();
           },
           (error) => {
@@ -140,9 +146,6 @@ export class Tab1Page implements OnInit {
    * Método que actualiza la lista de películas para mostrar en la página actual.
    */
   cargarPagina() {
-    // Calcular el número total de páginas
-    this.paginaActual = 1; // Reiniciar a la primera página
-    this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
 
     const inicio = (this.paginaActual - 1) * this.tamanoPagina; // Índice inicial
     const fin = inicio + this.tamanoPagina; // Índice final
