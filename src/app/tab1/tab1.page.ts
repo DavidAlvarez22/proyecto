@@ -38,11 +38,19 @@ export class Tab1Page implements OnInit {
    * El método ngOnInit carga las películas y prepara la lista de géneros.
    */
   ngOnInit() {
+    this.cargaPeliculas();
+    
+  }
+
+  /***
+   * Carga TODAS las peliculas y la lista de los distintos generos
+   */
+  cargaPeliculas(){
     this.isLoading = true;// Activa la barra de carga
     this.cargar.getPeliculas().pipe(delay(0)).subscribe(data => {//delay para retrasar artificialmente
-      this.peliculas = data;
+      //this.peliculas = data;
       //this.aplicarFiltros(); // Aplicar filtros iniciales
-      this.peliculasFiltradas = this.peliculas;
+      this.peliculasFiltradas = data;
       this.actualizarGeneros(); // Crear la lista de géneros
       this.isLoading = false; // Finalizar la carga
       
@@ -55,9 +63,7 @@ export class Tab1Page implements OnInit {
       console.error("Error cargando películas", error);
       this.isLoading = false;
     });
-    
   }
-
   /**
    * Método que aplica los filtros de búsqueda, género y año de lanzamiento sobre las películas,
    * y actualiza la paginación.
@@ -117,7 +123,7 @@ export class Tab1Page implements OnInit {
  
     aplicarFiltros() {
       this.isLoading = true;
-      if(this.buscarTexto !== "" || this.FechaLanzamiento !== null|| this.buscarReparto !== null || this.generoSeleccionado !== ""){
+      if(this.buscarTexto !== "" || this.FechaLanzamiento !== null|| this.buscarReparto !== "" || this.generoSeleccionado !== ""){
         this.cargar.buscarPeliculas(this.generoSeleccionado, this.buscarReparto, this.FechaLanzamiento, this.buscarTexto).pipe(delay(0)).subscribe(
           (response) => {
             
@@ -138,6 +144,8 @@ export class Tab1Page implements OnInit {
             console.error('Error en la busqueda:', error);
           }
         );
+      }else{
+        this.cargaPeliculas();
       }
     }
      

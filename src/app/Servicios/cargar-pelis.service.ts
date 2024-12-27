@@ -13,6 +13,9 @@ export class CargarPelisService {
   private jsonUrl = '/assets/movies-2020s-con-enCartel-string.json'; //Url para cargar el json de las películas. Habrá que sustituirlo por url api.
   private jsonUrlCartelera = 'assets/pelis.json'; // Ruta al archivo JSON
 
+  /***********************************************************************
+   * Si lo usais vuestra API desde local, cambiar esta url a http://localhost:8000/
+   **********************************************************************/
   private apiUrl: string = "http://10.2.56.127:8000/"; //Arkaitz
   public movies: Cartelera[] = []; 
   private tituloPeliculaSeleccionada: string = '';
@@ -29,7 +32,7 @@ export class CargarPelisService {
     return this.http.get<string[]>(this.apiUrl + "api/peliculas/generos");
   }
 
-  //Llama al metodo de busqueda de peliculas de la API
+  //Llama al metodo de busqueda de peliculas por parametro de la API
   buscarPeliculas(
     genero: string | null,
     reparto: string | null,
@@ -78,9 +81,7 @@ export class CargarPelisService {
     }
     console.log("URL API " + this.apiUrl + urlFiltros)
 
-
     return respuesta = this.http.get<Pelicula[]>(this.apiUrl + urlFiltros);
-
   }
 
   // Método para guardar el título de una película seleccionada.Nos hará falta para la geolocalización en el tab3.
