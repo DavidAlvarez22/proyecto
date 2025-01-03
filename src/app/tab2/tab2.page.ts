@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ClasificacionService } from '../Servicios/clasificacion.service';
+import { ClasificacionService } from '../services/clasificacion.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { NuevaClasificacionPage } from '../nueva-clasificacion/nueva-clasificacion.page';

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { StorageService } from '../services/storage.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +9,17 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(private storage: StorageService, private autenticacion: AuthService) {}
 
+  logout(): void {
+    this.autenticacion.logout().subscribe({
+      next: res => {
+        this.storage.limpiar();
+        window.location.reload();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
 }

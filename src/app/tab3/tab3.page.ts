@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
 import { latLng, tileLayer, Map, marker, icon, Layer, LatLngBounds } from 'leaflet';
 import * as L from 'leaflet';
-import { CargarPelisService } from '../Servicios/cargar-pelis.service';
+import { CargarPelisService } from '../services/cargar-pelis.service';
 import { Cartelera } from '../mis-interfaces/cartelera';
-import { GeoService } from '../Servicios/geo.service';
+import { GeoService } from '../services/geo.service';
 
 @Component({
   selector: 'app-tab3',

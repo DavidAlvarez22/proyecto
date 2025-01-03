@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CargarPelisService } from '../Servicios/cargar-pelis.service';
+import { CargarPelisService } from '../services/cargar-pelis.service';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { delay } from 'rxjs/operators';

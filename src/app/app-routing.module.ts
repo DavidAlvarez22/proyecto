@@ -4,8 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/mi-app/listado-peliculas', 
-    pathMatch: 'full',
+    loadChildren: () => import('./auth/auth.module').then((m)=>m.AuthModule)
   },
   {
     path: 'mi-app',

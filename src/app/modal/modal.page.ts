@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
-import { CargarPelisService } from '../Servicios/cargar-pelis.service';
-import { ClasificacionService } from '../Servicios/clasificacion.service';
+import { CargarPelisService } from '../services/cargar-pelis.service';
+import { ClasificacionService } from '../services/clasificacion.service';
 
 @Component({
   selector: 'app-modal',
