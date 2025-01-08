@@ -28,6 +28,7 @@ export class LoginComponent  implements OnInit {
     if (this.storage.esLogueado()) {
       this.sesionIniciada = true;
       this.nombre = this.storage.getUsuario().nombre;
+      this.router.navigate(['/mi-app']);
     }
   }
 
