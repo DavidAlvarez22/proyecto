@@ -41,7 +41,7 @@ export class LoginComponent  implements OnInit {
         this.loginFallido = false;
         this.sesionIniciada = true;
         this.nombre = this.storage.getUsuario().nombre;
-        this.router.navigate(['/']);
+        this.router.navigate(['/mi-app']);
       },
       error: err => {
         this.mensajeError = err.error.message;
