@@ -8,15 +8,4 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  esLogueado = false;
-
-  constructor(private storage: StorageService, private auth: AuthService) {}
-
-  nngOnInit(): void {
-    this.esLogueado = this.storage.esLogueado();
-
-    if(this.esLogueado) {
-
-    }
-  }
 }

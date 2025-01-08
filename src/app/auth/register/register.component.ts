@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { data } from 'jquery';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,25 +10,34 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent {
 
-  formulario: any = {
-    email: null,
-    password: null,
-    nombre: null
-  };
+  registerForm!: FormGroup;
 
   exitoso = false;
   registroFallido = false;
   mensajeError = '';
 
-  constructor(private autenticacion: AuthService) { }
+  constructor(private fb: FormBuilder, private autenticacion: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.registerForm = this.fb.group({
+      nombre: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
 
   onSubmit(): void {
-    const {email, password, nombre} = this.formulario;
+    if (this.registerForm.invalid) {return;}
+
+    const {email, password, nombre} = this.registerForm.value;
 
     this.autenticacion.register(email, password, nombre).subscribe({
       next: data => {
         this.exitoso = true;
         this.registroFallido = false;
+        this.router.navigate(['/login']);
       },
       error: err => {
         this.mensajeError = err.console.error.message;

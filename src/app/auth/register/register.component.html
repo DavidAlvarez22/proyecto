@@ -1,85 +1,59 @@
-<div class="col-md-12">
-  <div class="card card-container">
-    @if (!exitoso) {
-    <form
-      name="formulario"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
-      <div class="form-group">
-        <label for="email">Correo electronico</label>
-        <input
-          type="email"
-          class="form-control"
-          name="email"
-          [(ngModel)]="formulario.email"
-          required
-          email
-          #email="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-        />
-        @if (email.errors && f.submitted) {
-        <div class="invalid-feedback">
-          @if (email.errors['required']) {
-          <div>Correo electronico obligatorio</div>
-          }
-          @if (email.errors['email']) {
-          <div>Email must be a valid email address</div>
-          }
-        </div>
-        }
-      </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="formulario.password"
-          required
-          #password="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
-        />
-        @if (password.errors && f.submitted) {
-        <div class="invalid-feedback">
-          @if (password.errors['required']) {
-          <div>Contraseña obligatoria</div>
-          }
-        </div>
-        }
-      </div>
-      <div class="form-group">
-        <label for="nombre">Nombre de usuario</label>
-        <input
-          type="text"
-          class="form-control"
-          name="nombre"
-          [(ngModel)]="formulario.nombre"
-          required
-          #nombre="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && nombre.errors }"
-        />
-        @if (nombre.errors && f.submitted) {
-        <div class="invalid-feedback">
-          @if (nombre.errors['required']) {
-          <div>Email is required</div>
-          }
-        </div>
-        }
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-block">Registrar</button>
-      </div>
+<div class="page-body-wrapper full-page-wrapper auth-page">
+  <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
+    <div class="row w-100">
+      <div class="col-lg-4 mx-auto">
+        <h2 class="text-center mb-4">Registro</h2>
+        <div class="auto-form-wrapper">
 
-      @if (f.submitted && registroFallido) {
-      <div class="alert alert-warning">
-        El registro ha fallado!<br />{{ mensajeError }}
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+              <div class="input-group">
+                <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i *ngIf="registerForm.get('nombre')?.valid" class="fa fa-check-circle"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <input formControlName="email" type="email" class="form-control" placeholder="Correo">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i *ngIf="registerForm.get('email')?.valid" class="fa fa-check-circle"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <input formControlName="password" type="password" class="form-control" placeholder="Password">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i *ngIf="registerForm.get('password')?.valid" class="fa fa-check-circle"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary submit-btn btn-block">Crear cuenta</button>
+            </div>
+
+            <div class="text-block text-center my-3">
+              <span class="text-small font-weight-semibold">ya tienes una cuenta?</span>
+              <br>
+              <a routerLink="/login" class="text-black text-small">Login</a>
+            </div>
+
+          </form>
+
+        </div>
       </div>
-      }
-    </form>
-    } @else {
-    <div class="alert alert-success">El registro ha sido exitoso</div>
-    }
+    </div>
   </div>
 </div>

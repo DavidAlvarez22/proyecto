@@ -10,16 +10,17 @@ export class StorageService {
   constructor() { }
 
   limpiar(): void{
+    localStorage.clear();
     window.sessionStorage.clear();
   }
 
   public setUsuario(usuario: any): void {
-    window.sessionStorage.removeItem(CLAVE_USUARIO);
-    window.sessionStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+    localStorage.removeItem(CLAVE_USUARIO);
+    localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
   }
 
   public getUsuario(): any {
-    const usuario = window.sessionStorage.getItem(CLAVE_USUARIO);
+    const usuario = localStorage.getItem(CLAVE_USUARIO);
     if(usuario) {
       return JSON.parse(usuario);
     }
@@ -28,7 +29,7 @@ export class StorageService {
   }
 
   public esLogueado(): boolean {
-    const usuario = window.sessionStorage.getItem(CLAVE_USUARIO);
+    const usuario = localStorage.getItem(CLAVE_USUARIO);
     if (usuario) {
       return true;
     }
