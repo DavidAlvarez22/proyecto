@@ -65,11 +65,12 @@ export class Tab1Page implements OnInit {
     this.isLoading = true;
     this.peliculasSer.getPeliculas().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
-      this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
+      this.peliculasFiltradas/*.sort((a, b) => b.fechaEstreno - a.fechaEstreno)*/; //Ordena por el año, descendente
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
       this.cargarPagina();
+      console.log(this.peliculasFiltradas);
     }, error => {
       console.error("Error cargando películas", error);
       this.isLoading = false;
@@ -130,7 +131,8 @@ export class Tab1Page implements OnInit {
   actualizarGeneros() {
     this.peliculasSer.cargaGeneros().subscribe(
       (response) => {
-        this.generos = response.sort();
+        console.log(response);
+        this.generos = response/*.sort()*/;
       },
       (error) => {
         console.error('Error al obtener los géneros:', error);
