@@ -76,7 +76,11 @@ export class Tab1Page implements OnInit {
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
       this.cargarPagina();
-      console.log("Peliculas filtradas: " + this.peliculasFiltradas);
+      if (Array.isArray(this.peliculasFiltradas)) {
+        console.log("Filtradas Es un array");
+      } else {
+        console.log("Filtradas No es un array");
+      }
       console.log("Tamaño Peliculas filtradas: " + this.peliculasFiltradas.length);
     }, error => {
       console.error("Error cargando películas", error);

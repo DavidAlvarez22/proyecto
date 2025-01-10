@@ -38,7 +38,7 @@ export class PeliculaService {
    * Carga las peliculas en cartelera para enseñar al inicio de la aplicacion
    */
   getCartelera():Observable<Pelicula[]>{
-    return this.api.get(environment.ruta_pelicula_lista);
+    return this.api.get<Pelicula[]>(environment.ruta_pelicula_lista);
   }
 
   /**
@@ -69,7 +69,7 @@ export class PeliculaService {
       values.push("titulo=" + titulo);
 
     const filtros = values.join('&');
-    return this.api.get(environment.ruta_buscar + '?' + filtros);
+    return this.api.get<Pelicula[]>(environment.ruta_buscar + '?' + filtros);
   }
 
   /**
