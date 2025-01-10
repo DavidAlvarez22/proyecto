@@ -21,7 +21,7 @@ export class PeliculaService {
    * Permite obtener todas las películas desde la api
    */
   getPeliculas(): Observable<Pelicula[]> {
-    return this.api.get(environment.ruta_peliculas);
+    return this.api.get<Pelicula[]>(environment.ruta_peliculas);
     //return this.http.get<Pelicula[]>(this.apiUrl + "api/peliculas");
   }
 
@@ -30,7 +30,7 @@ export class PeliculaService {
    * Metodo que carga los generos mediante el endpoint de la API
    */
   cargaGeneros(): Observable<string[]> {
-    return this.api.get(environment.ruta_generos);
+    return this.api.get<string[]>(environment.ruta_generos);
     //return this.http.get<string[]>(this.apiUrl + "api/peliculas/generos");
   }
 
