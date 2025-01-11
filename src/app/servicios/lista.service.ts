@@ -60,7 +60,7 @@ export class ListaService {
    * Añade una pelicula de una lista a otra
    * @param pl
    */
-  public addPeliculoToLista(pl: PeliculaLista){
+  /*public addPeliculoToLista(pl: PeliculaLista){
     this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
       next:(response:Lista[]) => {
         this.listas.set([]);
@@ -69,7 +69,28 @@ export class ListaService {
       error:((e)=>console.log("ERROR"))
     });
   }
+*/
 
+  public addPeliculoToLista(pl: PeliculaLista){
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      console.log('Token encontrado:', token);  // Aquí puedes ver el token
+      console.log('URL de la petición:', environment.ruta_pelicula_lista);
+      console.log('Cuerpo de la solicitud:', pl);  // Verifica qué estás enviando como body
+    }else{
+      console.log("No hay token")
+    }
+    this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
+      next: (response: Lista[]) => {
+        this.listas.set([]);
+        this.listas.set(response);
+      },
+      error: (e) => {
+        console.error('ERROR', e);
+        console.log(e.error.message || 'Unknown error');
+      }
+    });
+  }
   /**
    *
    * @param pl

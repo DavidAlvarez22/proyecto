@@ -4,6 +4,7 @@ import {toObservable} from "@angular/core/rxjs-interop";
 import {ApiService} from "./api.service";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {Observable} from "rxjs";
 export class PeliculaService {
   private api = inject(ApiService);
 
+  private alertController = inject(AlertController);
   private valoracion = signal<Valoracion|undefined>(undefined);
 
   valoracion$ = toObservable(this.valoracion);
@@ -78,27 +80,49 @@ export class PeliculaService {
    */
   public loadValoracion(pelicula:number){
     const url = environment.ruta_valoracion + '/' + pelicula
+    console.log(url);
     this.api.get(url)
       .subscribe({
         next:(response:Valoracion) => {
-          console.log(response)
+          console.log("Respuesta recibida:", response);
           this.valoracion.set(response);
         },
         error:((e)=>console.log("ERRORVAL"+e))
       });
   }
+  
 
   /**
    * Añade la valoracion
    * @param valoracion
    */
   public addValoracion(valoracion: Valoracion){
-    this.api.post(environment.ruta_valoracion, valoracion)
+    //console.log("Votado: " + valoracion.votado);
+    //console.log(valoracion);
+    //if(valoracion.votado == false){
+      
+      this.api.post(environment.ruta_valoracion, valoracion)
       .subscribe({
         next:(response:Valoracion) => {
           this.valoracion.set(response);
+          console.log("ValoracionDTO: " + valoracion.puntuacion);
+          console.log(response);
         },
-        error:((e)=>console.log("ERROR"))
+        error:((e)=>console.log("ERROR añadiendo valoracion"))
       });
+    /*}else{
+      this.presentAlert();
+      console.log("Ya has votado esta pelicula")
+    }*/
+    
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Aviso',
+      message: 'No puedes votar porque ya has votado esta película.',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

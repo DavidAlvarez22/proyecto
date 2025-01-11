@@ -71,7 +71,7 @@ export class Tab1Page implements OnInit {
     this.isLoading = true;
     this.peliculasSer.getPeliculas().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
-      this.peliculasFiltradas/*.sort((a, b) => b.fechaEstreno - a.fechaEstreno)*/; //Ordena por el año, descendente
+      this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
@@ -145,8 +145,7 @@ export class Tab1Page implements OnInit {
     this.peliculasSer.cargaGeneros().subscribe(
       (response) => {
         console.log("Respuesta: " + response);
-        this.generos.length = 0; // Limpiar array antes de asignar
-        this.generos = response/*.sort()*/;
+        this.generos = response.sort();
         console.log("tamaño generos: " + this.generos.length);
         console.log("generos: " + this.generos);
         if (Array.isArray(this.generos)) {
