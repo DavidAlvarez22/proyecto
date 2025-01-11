@@ -13,6 +13,8 @@ export class ListaService {
 
   private listas = signal<Lista[]>([]);
   listas$ = toObservable(this.listas);
+
+  private listas2 = signal<Lista[]>([]);
   constructor() { }
 
   /**
@@ -78,12 +80,15 @@ export class ListaService {
       console.log('URL de la petición:', environment.ruta_pelicula_lista);
       console.log('Cuerpo de la solicitud:', pl);  // Verifica qué estás enviando como body
     }else{
-      console.log("No hay token")
+      console.log("No hay token");
+      console.log(pl)
     }
     this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
       next: (response: Lista[]) => {
         this.listas.set([]);
         this.listas.set(response);
+        console.log("respuesta:");
+        console.log(response);
       },
       error: (e) => {
         console.error('ERROR', e);
@@ -98,10 +103,29 @@ export class ListaService {
   public deletePeliculaFromLista(pl:PeliculaLista){
     const url = environment.ruta_pelicula_lista + '/'
       + pl.listaId + '/' + pl.peliculaId;
+      console.log(url);
     this.api.delete(url).subscribe({
-      next:(response:Lista[]) => {
+      next:() => {
         this.listas.set([]);
+        //this.listas.set(response);
+        console.log("registro eliminado");
+
+      },
+      error:((e)=>console.log("ERROR"))
+    });
+
+    const urlListas = environment.ruta_lista;
+    console.log(urlListas);
+    this.api.get(urlListas).subscribe({
+      next:(response:Lista[]) => {
+        //this.listas.set([]);
+        console.log("respuesta despues de borrar");
+        console.log(response);
         this.listas.set(response);
+        console.log("listas despues de respuesta");
+        console.log(response);
+        
+
       },
       error:((e)=>console.log("ERROR"))
     });

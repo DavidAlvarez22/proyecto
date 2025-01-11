@@ -9,6 +9,7 @@ export const environment = {
   ruta_peliculas: '/api/peliculas', //'/api/peliculas',
   ruta_lista: /*'assets/listas.json',*/'/api/lista',
   ruta_pelicula_lista: '/api/pelicula_lista'/*'/api/cartelera/pelisCartel'*/,
+  peliculas_cartelera: '/api/cartelera/pelisCartel',
   ruta_usuarios: '/api/usuarios',
   ruta_valoracion: /*'assets/valoracion.json',*/'/api/votos',
   ruta_cine: 'assets/todos.json',//'/api/cine',

@@ -48,6 +48,7 @@ export class Tab1Page implements OnInit {
     this.isLoading = true;
     this.peliculasSer.getCartelera().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
+      this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno);
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
@@ -72,6 +73,7 @@ export class Tab1Page implements OnInit {
     this.peliculasSer.getPeliculas().pipe(delay(0)).subscribe(data => {
       this.peliculasFiltradas = data;
       this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
+      console.log("Peliculas ordenadas");
       this.isLoading = false;
       this.paginaActual = 1;
       this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);
@@ -94,6 +96,8 @@ export class Tab1Page implements OnInit {
       this.peliculasSer.buscarPeliculas(this.generoSeleccionado, this.buscarReparto, this.FechaLanzamiento, this.buscarTexto).pipe(delay(0)).subscribe(
         (response) => {
           this.peliculasFiltradas = response;
+          this.peliculasFiltradas.sort((a, b) => b.fechaEstreno - a.fechaEstreno); //Ordena por el año, descendente
+          console.log("Peliculas ordenadas");
           this.isLoading = false;
           this.paginaActual = 1;
           this.totalPaginas = Math.ceil(this.peliculasFiltradas.length / this.tamanoPagina);

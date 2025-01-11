@@ -36,7 +36,14 @@ this.listaSer.loadListas();
   public onShowMore(id:string){
     const element = document.getElementById(id);
     //if(element != null)
-      console.log(element!.attributes);
+    console.log("lista: " + id);
+    console.log(this.listas());
+    console.log("Es array:", Array.isArray(this.listas())); 
+    let resultado = id.replace("lista", "");
+    const intId: number = Number(resultado);
+    console.log("ID: " + intId);
+    const listaPrueba: Lista = this.listas().find(lista => lista.id === intId)!;    this.onChangeLista(listaPrueba);
+      //console.log(this.selectedlista());
       const visible = element!.getAttribute('visible')!;
       if(visible === 'true'){
         element!.setAttribute('visible', 'false');
@@ -56,6 +63,8 @@ this.listaSer.loadListas();
    */
   public onChangeLista(lista: Lista){
     this.selectedlista.set(lista);
+    console.log("lista Change:");
+    console.log(lista);
     //this.peliculas.set([]);
     //this.peliculas.set(lista.peliculas);
   }
@@ -65,6 +74,8 @@ this.listaSer.loadListas();
    * @param listaId
    */
   deletePeliculaFromLista(peliculaId: number) {
+    console.log("Lista seleccionada:")
+    console.log(this.selectedlista());
     this.listaSer.deletePeliculaFromLista({
       listaId: this.selectedlista()!.id,
       peliculaId: peliculaId

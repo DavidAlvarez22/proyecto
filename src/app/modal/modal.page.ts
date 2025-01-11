@@ -1,3 +1,4 @@
+import { PeliculaLista } from './../mis-interfaces/pelicula';
 import {Component, inject, Input, input, OnInit, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
