@@ -25,7 +25,7 @@ export class Tab2Page implements OnInit {
   ) {}
 
   ngOnInit() {
-this.listaSer.loadListas();
+    this.listaSer.loadListas();
     const subs = this.listaSer.listas$.subscribe({
       next:(response) => this.listas.set(response)
     });
@@ -35,12 +35,10 @@ this.listaSer.loadListas();
 
   public onShowMore(id:string){
     const element = document.getElementById(id);
+
     //if(element != null)
-    console.log("lista: " + id);
-    console.log(this.listas());
-    console.log("Es array:", Array.isArray(this.listas())); 
-    let resultado = id.replace("lista", "");
-    const intId: number = Number(resultado);
+    let resultado = id.replace("lista", ""); //Sacamos el id de la lista
+    const intId: number = Number(resultado); //Pasamos a number el string con el id
     console.log("ID: " + intId);
     const listaPrueba: Lista = this.listas().find(lista => lista.id === intId)!;    this.onChangeLista(listaPrueba);
       //console.log(this.selectedlista());
@@ -246,10 +244,6 @@ this.listaSer.loadListas();
    * @param nombre
    */
   agregarLista(nombre: string){
-    this.listaSer.addLista({
-      id: -1,
-      nombre:nombre,
-      peliculas:[]
-    });
+    this.listaSer.addLista(nombre);
   }
 }

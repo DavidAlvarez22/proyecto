@@ -32,8 +32,8 @@ export class ListaService {
    *
    * @param lista
    */
-  public addLista(lista: Lista){
-    this.api.post(environment.ruta_pelicula_lista, lista).subscribe({
+  public addLista(nombre: string){
+    this.api.post(environment.ruta_lista, nombre).subscribe({
       next:(response:Lista[]) => {
         this.listas.set([]);
         this.listas.set(response);
@@ -50,12 +50,14 @@ export class ListaService {
     const url = environment.ruta_lista + '/'
       + listaId;
     this.api.delete(url).subscribe({
-      next:(response:Lista[]) => {
-        this.listas.set([]);
-        this.listas.set(response);
+      next:() => {
+        console.log("Lista eliminada");
       },
       error:((e)=>console.log("ERROR"))
     });
+
+    this.actualizaListas();
+
   }
 
   /**
@@ -75,14 +77,6 @@ export class ListaService {
 
   public addPeliculoToLista(pl: PeliculaLista){
     const token = localStorage.getItem('authToken');
-    if (token) {
-      console.log('Token encontrado:', token);  // Aquí puedes ver el token
-      console.log('URL de la petición:', environment.ruta_pelicula_lista);
-      console.log('Cuerpo de la solicitud:', pl);  // Verifica qué estás enviando como body
-    }else{
-      console.log("No hay token");
-      console.log(pl)
-    }
     this.api.post(environment.ruta_pelicula_lista, pl).subscribe({
       next: (response: Lista[]) => {
         this.listas.set([]);
@@ -106,7 +100,7 @@ export class ListaService {
       console.log(url);
     this.api.delete(url).subscribe({
       next:() => {
-        this.listas.set([]);
+        //this.listas.set([]);
         //this.listas.set(response);
         console.log("registro eliminado");
 
@@ -114,21 +108,7 @@ export class ListaService {
       error:((e)=>console.log("ERROR"))
     });
 
-    const urlListas = environment.ruta_lista;
-    console.log(urlListas);
-    this.api.get(urlListas).subscribe({
-      next:(response:Lista[]) => {
-        //this.listas.set([]);
-        console.log("respuesta despues de borrar");
-        console.log(response);
-        this.listas.set(response);
-        console.log("listas despues de respuesta");
-        console.log(response);
-        
-
-      },
-      error:((e)=>console.log("ERROR"))
-    });
+    this.actualizaListas();
   }
 
   /**
@@ -143,5 +123,25 @@ export class ListaService {
      }
     );
     return numeros;
+  }
+
+  public actualizaListas(){
+    console.log("respuesta antes de actualizar");
+    console.log(this.listas);
+    const urlListas = environment.ruta_lista;
+    console.log(urlListas);
+    this.api.get(urlListas).subscribe({
+      next:(response:Lista[]) => {
+        this.listas.set([]);
+        console.log("respuesta despues de actualizar");
+        console.log(response);
+        this.listas.set(response);
+        console.log("listas despues de respuesta");
+        console.log(this.listas);
+        
+
+      },
+      error:((e)=>console.log("ERROR"))
+    });
   }
 }
