@@ -13,24 +13,24 @@
 <ion-content>
   <img [src]="pelicula.imagen" />
   <p><strong>Año:</strong> {{ pelicula.fechaEstreno }}</p>
-  <p><strong>Reparto:</strong> {{ pelicula.reparto.join(', ') }}</p>
+  <p><strong>Reparto:</strong> {{ pelicula.reparto}}</p>
 
   <!-- Lista de géneros -->
   <p>
     <strong>Géneros:</strong>
     <!-- Mostrar solo los primeros 2 géneros, con opción de expandir -->
-    <span *ngIf="pelicula.generos.length > 2 && !verGeneros">
-      {{ pelicula.generos.slice(0, 2).join(', ') }}
+    <span *ngIf="pelicula.genero.split(', ').length > 2 && !verGeneros">
+      {{ pelicula.genero.split(', ').slice(0, 2)}}
       <ion-icon name="add-circle-outline" (click)="toggleGeneros()" class="toggle-icon"></ion-icon>
     </span>
     <!-- Mostrar todos los géneros si están expandidos -->
-    <span *ngIf="pelicula.generos.length > 2 && verGeneros">
-      {{ pelicula.generos.join(', ') }}
+    <span *ngIf="pelicula.genero.split(', ').length > 2 && verGeneros">
+      {{ pelicula.genero.split(', ') }}
       <ion-icon name="remove-circle-outline" (click)="toggleGeneros()" class="toggle-icon"></ion-icon>
     </span>
     <!-- Mostrar todos los géneros si hay 2 o menos -->
-    <span *ngIf="pelicula.generos.length <= 2">
-      {{ pelicula.generos.join(', ') }}
+    <span *ngIf="pelicula.genero.split(', ').length <= 2">
+      {{ pelicula.genero}}
     </span>
   </p>
 
@@ -40,21 +40,44 @@
   <!-- Sección de valoración -->
   <div class="rating-section">
     <p>Valoración media:</p>
-    <div class="stars">
-      <!-- Mostrar estrellas dinámicamente basado en la valoración -->
-      <ion-icon *ngFor="let star of stars" [name]="star"></ion-icon>
-    </div>
-    <p class="small-text">{{ valoracionMedia }} de 5 ({{ numeroValoraciones }} valoraciones)</p>
+    @if (valoracion()?.puntuacion === -1) {
+      <div>
+        <span> No hay ninguna valoracion</span>
+      </div>
+    } @else {
+      <div class="stars">
+        <!-- Mostrar estrellas dinámicamente basado en la valoración -->
+        <ion-icon *ngFor="let star of stars" [name]="star"></ion-icon>
+      </div>
+      <p class="small-text">{{ valoracion()?.puntuacion }} de 5 </p>
+    }
   </div>
 
-  <!-- Botón para valorar la película -->
-  <ion-button (click)="valorarPelicula()">Valorar esta película</ion-button>
+  <!--Si la pelicula esta votada por el usuario el boton apararece en verde y se puede votar-->
+  <span *ngIf="estaVotado">
+    <ion-button color="danger" (click)="alertaVotado()">Valorar esta película</ion-button>
+  </span>
+  <span *ngIf="!estaVotado">
+    <ion-button color="success"  (click)="valorarPelicula()">Valorar esta película</ion-button>
+  </span>
+
 
   <!-- Botones dinámicos para clasificar la película -->
-  <ion-button *ngFor="let clasificacion of ListasClasificacion" (click)="clasificarPelicula(clasificacion)">
-    {{ clasificacion }}
-  </ion-button>
+  @for (lista of listas(); track lista.id) {
+    @if (listaSeleccionada().includes(lista.id)) {
+      <ion-button class="seleccionado" (click)="removeDeLista(lista.id)">
+        {{ lista.nombre }}
+      </ion-button>
+    } @else {
+      <ion-button class="lista" (click)="addALista(lista.id)">
+        {{ lista.nombre }}
+      </ion-button>
+    }
+  }
 
-  <!-- Botón para abrir la ubicación geográfica basada en el título de la película -->
-  <ion-button (click)="abrirGeolocalizacion(pelicula.titulo)">Abrir en Geolocalización</ion-button>
+  @if (enCartelera()){
+    <!-- Botón para abrir la ubicación geográfica basada en el título de la película -->
+    <ion-button (click)="abrirGeolocalizacion()">Abrir en Geolocalización</ion-button>
+  }
+
 </ion-content>

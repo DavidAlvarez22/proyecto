@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ClasificacionService } from '../Servicios/clasificacion.service';
+import {ListaService} from "../servicios/lista.service";
 
 @Component({
   selector: 'app-nueva-clasificacion',
@@ -8,19 +8,21 @@ import { ClasificacionService } from '../Servicios/clasificacion.service';
   styleUrls: ['./nueva-clasificacion.page.scss'],
 })
 export class NuevaClasificacionPage {
+  private listasSer = inject(ListaService);
 
-  nuevaClasificacion: string = '';
+  nuevaLista: string = '';
 
-  constructor(private modalController: ModalController, private clasificacionService: ClasificacionService) {}
+  constructor(private modalController: ModalController) {}
 
   cerrar() {
     this.modalController.dismiss();
   }
 
   agregarClasificacion() {
-    if (this.nuevaClasificacion.trim()) {
-      this.clasificacionService.agregarClasificacion(this.nuevaClasificacion);
-      this.modalController.dismiss(this.nuevaClasificacion);
+    if (this.nuevaLista.trim()) {
+      this.listasSer.addLista(this.nuevaLista);
+      //this.clasificacionService.agregarClasificacion(this.nuevaClasificacion);
+      this.modalController.dismiss(this.nuevaLista);
     }
   }
 
