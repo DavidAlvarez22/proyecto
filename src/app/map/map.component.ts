@@ -55,7 +55,6 @@ export class MapComponent  implements OnInit {
 
      this.cineSer.cartelera$.subscribe({
        next:(data) =>{
-         console.log(data);
          this.cines.set(data);
          this.generateCines(this.cines());
        }
@@ -245,7 +244,6 @@ export class MapComponent  implements OnInit {
       projection: this.map.getView().getProjection()
     });
 
-    console.log("CREADO");
     this.geolocation.on("change:position", (evt)=> {
       const position = this.geolocation.getPosition();
       if(position != undefined){

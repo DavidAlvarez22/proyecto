@@ -26,8 +26,6 @@ export class SearchComponent {
    * @param pelicula
    */
   onWrite(pelicula:HTMLInputElement){
-    console.log(this.cinesSer.allPeliculas());
-    console.log(this.cinesSer.filmsWithWords(pelicula.value));
     this.pelisOptions.set(this.cinesSer.filmsWithWords(pelicula.value));
   }
 
@@ -50,7 +48,6 @@ export class SearchComponent {
     this.pelisOptions.set([]);
     const pelicula = input.value;
     if(this.cinesSer.findPeliculaByName(pelicula)){
-      console.log(this.cinesSer.getCinesByPelicula(pelicula));
       this.cinesSer.updateCartelera(this.cinesSer.getCinesByPelicula(pelicula));
       this.datosSer.updateMostrar(DataType.pelicula);
       this.datosSer.updateData(this.cinesSer.mostrarCinesByPelicula(pelicula));

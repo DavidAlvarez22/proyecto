@@ -53,12 +53,10 @@ export class ListaService {
       next:(response) => {
         this.listas.set([]);
         this.listas.set(response);
-        console.log("Lista eliminada");
       },
       error:((e)=>console.log("ERROR"))
     });
 
-    //this.actualizaListas();
 
   }
 
@@ -92,8 +90,6 @@ export class ListaService {
       },
       error:((e)=>console.log("ERROR"))
     });
-
-    //this.actualizaListas();
   }
 
   /**
