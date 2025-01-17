@@ -180,7 +180,10 @@ export class ModalPage implements  OnInit{
 
   }
 
-
+ /*
+ * Abre una alerta para valorar la pelicula
+ * Manda el voto a la API
+ */
 
   async valorarPelicula() {
     const alert = await this.alertController.create({
@@ -228,7 +231,9 @@ export class ModalPage implements  OnInit{
     await alert.present();
   }
 
-
+  /*
+  * controla si la pelicula ha sido votada por el usuario activo
+  */
   async alertaVotado() {
     console.log("ALertaVotado ejecutado")
     const alert = await this.alertController.create({

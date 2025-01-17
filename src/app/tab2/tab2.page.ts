@@ -80,6 +80,11 @@ export class Tab2Page implements OnInit {
     });
   }
 
+  /*
+  * Busca la lista donde no esta incluida la pelicula
+  * @param peliculaId
+  * @returns boolean
+  */
   getListasByPelicula(peliculaId:number){
     //Busca las listas donde no este incluida la pelicula
     return  this.listas().filter(lista =>{
@@ -101,62 +106,6 @@ export class Tab2Page implements OnInit {
     //this.clasificacion.clasificar(this.pelicula, clasificacion);
     //this.modalController.dismiss();
   }
-
-
-  // /**
-  //  * Método para obtiener las clasificaciones desde el servicio y filtra las películas por clasificación actual.
-  //  */
-  // actualizarClasificaciones() {
-  //   this.clasificaciones = this.clasificacionService.obtenerClasificaciones();
-  //   this.filtrarPeliculasPorClasificacion();
-  // }
-
-  // /**
-  //  * Método que clasifica una película bajo una categoría específica.
-  //  * @param pelicula Película que será clasificada.
-  //  * @param clasificacion Clasificación a aplicar.
-  //  */
-  // clasificarPelicula(pelicula: any, clasificacion: string) {
-  //   // Clasificar la película usando el servicio
-  //   this.clasificacionService.clasificar(pelicula, clasificacion);
-  //   // Recargar las películas clasificadas
-  //   this.obtenerPeliculasClasificadas();
-  // }
-
-  // /**
-  //  * Método para filtrar las películas por la clasificación actualmente seleccionada.
-  //  */
-  // filtrarPeliculasPorClasificacion() {
-  //   if (this.segmentoSeleccionado) {
-  //     // Obtener las películas clasificadas bajo la categoría seleccionada
-  //     this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
-  //   } else {
-  //     // Si no hay categoría seleccionada, limpiar la lista
-  //     this.peliculas = [];
-  //   }
-  // }
-
-  /**
-   * Método que elimina una película específica de la lista actual y del servicio.
-   * @param index Índice de la película a eliminar.
-   */
-
-
-  // /**
-  //  * Método que cambia el segmento seleccionado y actualiza las películas clasificadas.
-  //  * @param event Evento que contiene el nuevo valor del segmento seleccionado.
-  //  */
-  // cambioSegmento(event: any) {
-  //   this.segmentoSeleccionado = event.detail.value;
-  //   this.obtenerPeliculasClasificadas();
-  // }
-
-  // /**
-  //  * Método para obtener las películas clasificadas bajo la clasificación seleccionada.
-  //  */
-  // obtenerPeliculasClasificadas() {
-  //   this.peliculas = this.clasificacionService.obtenerClasificadas(this.segmentoSeleccionado);
-  // }
 
   /**
    * Método que abre un alertController para agregar una nueva clasificación.

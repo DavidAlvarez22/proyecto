@@ -96,6 +96,9 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  /*
+  *Recibe las peliculas buscadas por filtros desde la API
+  */
   aplicarFiltros() {
     if (this.buscarTexto || this.FechaLanzamiento || this.buscarReparto || this.generoSeleccionado) {
       this.isLoading = true;
@@ -118,6 +121,10 @@ export class Tab1Page implements OnInit {
     }
   }
 
+  /*
+  * Crea la pagina donde se enseñan las peliculas,
+  * controla el numero de peliculas mostradas
+  */
   cargarPagina() {
     const inicio = (this.paginaActual - 1) * this.tamanoPagina;
     const fin = inicio + this.tamanoPagina;
@@ -126,6 +133,9 @@ export class Tab1Page implements OnInit {
     console.log("Tamaño peliculasPaginadas: " + this.peliculasPaginadas.length);
   }
 
+  /*
+   * Pasa a la siguiente pagina
+   */
   paginaSiguiente() {
     if (this.paginaActual < this.totalPaginas) {
       this.paginaActual++;
@@ -133,6 +143,9 @@ export class Tab1Page implements OnInit {
     }
   }
 
+  /*
+   * Pasa a la anterior pagina
+   */
   paginaAnterior() {
     if (this.paginaActual > 1) {
       this.paginaActual--;
@@ -140,6 +153,9 @@ export class Tab1Page implements OnInit {
     }
   }
 
+  /*
+   * Te lleva directamente a la pagina seleccionada
+   */
   irAPagina() {
     if (this.paginaSeleccionada && this.paginaSeleccionada >= 1 && this.paginaSeleccionada <= this.totalPaginas) {
       this.paginaActual = this.paginaSeleccionada;
@@ -147,10 +163,16 @@ export class Tab1Page implements OnInit {
     }
   }
 
+  /*
+   * Carga las peliculas que estan en cines
+   */
   estaEnCartelera(peliculaId: number):string{
     return this.cinesSer.findPeliculaById(peliculaId).toString();
   }
 
+  /*
+   * Carga todos los generos diferentes de las peliculas
+   */
   actualizarGeneros() {
     this.peliculasSer.cargaGeneros().subscribe(
       (response) => {
@@ -170,6 +192,10 @@ export class Tab1Page implements OnInit {
     );
   }
 
+  /*
+   * Abre el modal de la pelicula
+   * @param pelicula elegida
+   */
   async abrirModal(pelicula: any) {
     const modal = await this.modal.create({
       component: ModalPage,
