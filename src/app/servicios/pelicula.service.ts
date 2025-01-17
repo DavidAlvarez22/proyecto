@@ -26,12 +26,10 @@ export class PeliculaService {
     return this.api.get<Pelicula[]>(environment.ruta_peliculas).pipe(
       map((value:Pelicula[]) => {
         return value.map(peli =>{
-          if(!peli.imagen){
+          if(!peli.imagen)
             peli.imagen = 'assets/sin-imagen.png';
-          }
           return peli;
         })
-
       })
     );
   }
@@ -49,7 +47,15 @@ export class PeliculaService {
    * Carga las peliculas en cartelera para enseñar al inicio de la aplicacion
    */
   getCartelera():Observable<Pelicula[]>{
-    return this.api.get<Pelicula[]>(environment.peliculas_cartelera);
+    return this.api.get<Pelicula[]>(environment.peliculas_cartelera).pipe(
+      map((value:Pelicula[]) => {
+        return value.map(peli =>{
+          if(!peli.imagen)
+            peli.imagen = 'assets/sin-imagen.png';
+          return peli;
+        })
+      })
+    );
   }
 
   /**
@@ -80,7 +86,15 @@ export class PeliculaService {
       values.push("titulo=" + titulo);
 
     const filtros = values.join('&');
-    return this.api.get<Pelicula[]>(environment.ruta_buscar + '?' + filtros);
+    return this.api.get<Pelicula[]>(environment.ruta_buscar + '?' + filtros).pipe(
+      map((value:Pelicula[]) => {
+        return value.map(peli =>{
+          if(!peli.imagen)
+            peli.imagen = 'assets/sin-imagen.png';
+          return peli;
+        })
+      })
+    );
   }
 
   /**
